@@ -9,7 +9,8 @@ public interface MongoTemplateInterface {
     public void updateWorkExperience(String username,ArrayList<WorkExperience>arr);
     public void updateEducation(String username,ArrayList<Education>arr);
     public void updateSkills(String username,ArrayList<String>arr);
-    public void updateIspresent(String username,boolean val);
+    public boolean updateIspresent(String username);
     public boolean checkForUser(String username);
     public boolean checkCredential(String username,String Password);
+    public void updateAdditionalInfo(String username,String additionalInfo);
 }

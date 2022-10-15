@@ -20,5 +20,5 @@ public class User {
     private ArrayList<Education> education=new ArrayList<>();
     private ArrayList<WorkExperience> workExperiences=new ArrayList<>();
     private ArrayList<String> skills=new ArrayList<>();
-    private String additionalInfo;
+    private String additionalInfo="No data";
 }

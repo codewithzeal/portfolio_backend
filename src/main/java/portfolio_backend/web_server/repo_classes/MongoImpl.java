@@ -22,26 +22,36 @@ public class MongoImpl implements MongoTemplateInterface{
     public void updateWorkExperience(String username, ArrayList<WorkExperience> arr) {
         Query query = new Query(Criteria.where("username").is(username));
         Update update = new Update();
-        update.push("education").each(arr);
+        update.push("workExperiences").each(arr);
         db.updateFirst(query, update, User.class);
     }
 
     @Override
     public void updateEducation(String username, ArrayList<Education> arr) {
-        
+        Query query = new Query(Criteria.where("username").is(username));
+        Update update = new Update();
+        update.push("education").each(arr);
+        db.updateFirst(query, update, User.class);
         
     }
 
     @Override
     public void updateSkills(String username, ArrayList<String> arr) {
-        
+        Query query = new Query(Criteria.where("username").is(username));
+        Update update = new Update();
+        update.push("skills").each(arr);
+        db.updateFirst(query, update, User.class);
         
     }
 
     @Override
-    public void updateIspresent(String username, boolean val) {
+    public boolean updateIspresent(String username) {
         
-        
+        Query query = new Query(Criteria.where("username").is(username).and("isDataPresent").is(true));
+        User user=db.findOne(query,User.class);
+        if(user!=null)
+        return true;
+        return false;
     }
 
     @Override
@@ -62,6 +72,15 @@ public class MongoImpl implements MongoTemplateInterface{
         if(user!=null)
         return true;
         return false;
+    }
+
+    @Override
+    public void updateAdditionalInfo(String username, String additionalInfo) {
+        Query query = new Query(Criteria.where("username").is(username));
+        Update update = new Update();
+        update.set("additionalInfo", additionalInfo);
+        db.updateFirst(query, update, User.class);
+        
     }
     
 }

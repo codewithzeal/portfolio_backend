@@ -11,7 +11,7 @@ import lombok.ToString;
 public class WorkExperience {
     
     private  String organization;
-    private String postition;
+    private String position;
     private String startDate;
     private String endDate;
 
