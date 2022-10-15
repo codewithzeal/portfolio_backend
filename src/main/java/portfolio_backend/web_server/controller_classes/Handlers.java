@@ -1,7 +1,10 @@
 package portfolio_backend.web_server.controller_classes;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 //import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import portfolio_backend.web_server.entity_classes.UpdateType;
 import portfolio_backend.web_server.entity_classes.User;
+import portfolio_backend.web_server.service_classes.HandleFecth;
 //import portfolio_backend.web_server.service_classes.HandleFecth;
 import portfolio_backend.web_server.service_classes.HandleLogin;
 //import portfolio_backend.web_server.service_classes.HandleSignup;
@@ -24,12 +28,10 @@ public class Handlers {
     private HandleLogin login;
     @Autowired
     private HandleSignup signup;
-    // @Autowired
-    // private HandleSignup singup;
     @Autowired
     private HandleUpdate update;
-    // @Autowired
-    // private HandleFecth fetch;
+    @Autowired
+    private HandleFecth fetch;
 
     @PostMapping(path="/login",produces = MediaType.APPLICATION_JSON_VALUE,
     consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -52,5 +54,11 @@ public class Handlers {
     void handleUpdate(@RequestBody UpdateType updateType)
     {
         update.doUpdate(updateType.getType(),updateType.getUser());
+    }
+
+    @PostMapping(path="/fetch/{username}",produces = MediaType.APPLICATION_JSON_VALUE)
+    List<User> fetchUser(@PathVariable String username)
+    {
+        return fetch.getData(username);
     }
 }

@@ -1,7 +1,7 @@
 package portfolio_backend.web_server.repo_classes;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -81,6 +81,16 @@ public class MongoImpl implements MongoTemplateInterface{
         update.set("additionalInfo", additionalInfo);
         db.updateFirst(query, update, User.class);
         
+    }
+
+    @Override
+    public List<User> fetchData(String username) {
+       if(checkForUser(username))
+       {
+        Query query = new Query(Criteria.where("username").is(username));    
+        return db.find(query, User.class);
+       }
+       return null;
     }
     
 }
