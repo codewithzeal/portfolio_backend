@@ -20,6 +20,10 @@ public class HandleUpdate {
         db.updateSkills(user.getUsername(),user.getSkills());
         else if(type.equals("ai")&&db.checkForUser(user.getUsername()))
         db.updateAdditionalInfo(user.getUsername(), user.getAdditionalInfo());
+        else if(type.equals("projects")&&db.checkForUser(user.getUsername()))
+        db.updateProject(user.getUsername(),user.getProjects());
+        else if(type.equals("address")&&db.checkForUser(user.getUsername()))
+        db.updateAddress(user.getUsername(),user.getAddress());
 
     }
 }

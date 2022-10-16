@@ -10,7 +10,9 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
+import portfolio_backend.web_server.entity_classes.Address;
 import portfolio_backend.web_server.entity_classes.Education;
+import portfolio_backend.web_server.entity_classes.Project;
 import portfolio_backend.web_server.entity_classes.User;
 import portfolio_backend.web_server.entity_classes.WorkExperience;
 @Component
@@ -87,10 +89,28 @@ public class MongoImpl implements MongoTemplateInterface{
     public List<User> fetchData(String username) {
        if(checkForUser(username))
        {
-        Query query = new Query(Criteria.where("username").is(username));    
+        Query query = new Query(Criteria.where("username").is(username));   
+        query.fields().exclude("password");
         return db.find(query, User.class);
        }
        return null;
+    }
+
+    @Override
+    public void updateAddress(String username, Address address) {
+        Query query = new Query(Criteria.where("username").is(username));
+        Update update = new Update();
+        update.set("address", address);
+        db.updateFirst(query, update, User.class);
+    }
+
+    @Override
+    public void updateProject(String username, ArrayList<Project> arr) {
+        Query query = new Query(Criteria.where("username").is(username));
+        Update update = new Update();
+        update.push("projects").each(arr);
+        db.updateFirst(query, update, User.class);
+        
     }
     
 }

@@ -20,5 +20,8 @@ public class User {
     private ArrayList<Education> education=new ArrayList<>();
     private ArrayList<WorkExperience> workExperiences=new ArrayList<>();
     private ArrayList<String> skills=new ArrayList<>();
+    private ArrayList<Project> projects=new ArrayList<>();
     private String additionalInfo="No data";
+    private Address address=new Address();
+    
 }

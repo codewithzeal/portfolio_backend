@@ -53,7 +53,7 @@ public class Handlers {
     @ResponseStatus(value = HttpStatus.OK)
     void handleUpdate(@RequestBody UpdateType updateType)
     {
-        update.doUpdate(updateType.getType(),updateType.getUser());
+        update.doUpdate(updateType.getType(),updateType.getUserToUpdate());
     }
 
     @PostMapping(path="/fetch/{username}",produces = MediaType.APPLICATION_JSON_VALUE)

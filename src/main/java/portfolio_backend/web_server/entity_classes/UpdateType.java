@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class UpdateType {
     private String type;
-    User user;
+    User userToUpdate;
 }
