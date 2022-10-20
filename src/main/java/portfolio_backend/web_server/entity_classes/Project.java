@@ -8,6 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Project {
+    private String idValue;
     private String title;
     private String description;
     private String startDate;

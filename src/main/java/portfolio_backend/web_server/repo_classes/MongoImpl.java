@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import portfolio_backend.web_server.entity_classes.Address;
+import portfolio_backend.web_server.entity_classes.BasicDetails;
 import portfolio_backend.web_server.entity_classes.Education;
 import portfolio_backend.web_server.entity_classes.Project;
 import portfolio_backend.web_server.entity_classes.User;
@@ -21,28 +22,60 @@ public class MongoImpl implements MongoTemplateInterface{
     @Autowired
     MongoTemplate db;
     @Override
-    public void updateWorkExperience(String username, ArrayList<WorkExperience> arr) {
-        Query query = new Query(Criteria.where("username").is(username));
-        Update update = new Update();
-        update.push("workExperiences").each(arr);
-        db.updateFirst(query, update, User.class);
+    public String updateWorkExperience(String username, ArrayList<WorkExperience> arr) {
+        if(arr.get(0).getIdValue()==null)
+        {
+            System.out.println("here here here here 0");
+            arr.get(0).setIdValue(username+System.currentTimeMillis());
+            Query query = new Query(Criteria.where("username").is(username));
+            Update update = new Update();
+            update.push("workExperiences").each(arr);
+            db.updateFirst(query, update, User.class);
+            return "ok";
+        }
+        else
+        {
+            System.out.println("here here here here");
+            String id=arr.get(0).getIdValue();
+            Query query = new Query(Criteria.where("username").is(username).and("workExperiences.idValue").is(id));
+            Update update=new Update();
+            update.set("workExperiences.$", arr.get(0));
+            db.findAndModify(query, update, User.class);
+            return "ok";
+        }
     }
 
     @Override
-    public void updateEducation(String username, ArrayList<Education> arr) {
-        Query query = new Query(Criteria.where("username").is(username));
-        Update update = new Update();
-        update.push("education").each(arr);
-        db.updateFirst(query, update, User.class);
-        
+    public String updateEducation(String username, ArrayList<Education> arr) {
+        if(arr.get(0).getIdValue()==null)
+        {
+            System.out.println("here here here here 0");
+            arr.get(0).setIdValue(username+System.currentTimeMillis());
+            Query query = new Query(Criteria.where("username").is(username));
+            Update update = new Update();
+            update.push("education").each(arr);
+            db.updateFirst(query, update, User.class);
+            return "ok";
+        }
+        else
+        {
+            System.out.println("here here here here");
+            String id=arr.get(0).getIdValue();
+            Query query = new Query(Criteria.where("username").is(username).and("education.idValue").is(id));
+            Update update=new Update();
+            update.set("education.$", arr.get(0));
+            db.findAndModify(query, update, User.class);
+            return "ok";
+        }
     }
 
     @Override
-    public void updateSkills(String username, ArrayList<String> arr) {
+    public String updateSkills(String username, ArrayList<String> arr) {
         Query query = new Query(Criteria.where("username").is(username));
         Update update = new Update();
         update.push("skills").each(arr);
         db.updateFirst(query, update, User.class);
+        return "ok";
         
     }
 
@@ -77,11 +110,12 @@ public class MongoImpl implements MongoTemplateInterface{
     }
 
     @Override
-    public void updateAdditionalInfo(String username, String additionalInfo) {
+    public String updateAdditionalInfo(String username, String additionalInfo) {
         Query query = new Query(Criteria.where("username").is(username));
         Update update = new Update();
         update.set("additionalInfo", additionalInfo);
         db.updateFirst(query, update, User.class);
+        return "ok";
         
     }
 
@@ -97,20 +131,47 @@ public class MongoImpl implements MongoTemplateInterface{
     }
 
     @Override
-    public void updateAddress(String username, Address address) {
+    public String updateAddress(String username, Address address) {
         Query query = new Query(Criteria.where("username").is(username));
         Update update = new Update();
         update.set("address", address);
         db.updateFirst(query, update, User.class);
+        return "ok";
     }
 
     @Override
-    public void updateProject(String username, ArrayList<Project> arr) {
+    public String updateProject(String username, ArrayList<Project> arr) {
+        if(arr.get(0).getIdValue()==null)
+        {
+            System.out.println("here here here here 0");
+            arr.get(0).setIdValue(username+System.currentTimeMillis());
+            Query query = new Query(Criteria.where("username").is(username));
+            Update update = new Update();
+            update.push("projects").each(arr);
+            db.updateFirst(query, update, User.class);
+            return "ok";
+        }
+        else
+        {
+            System.out.println("here here here here");
+            String id=arr.get(0).getIdValue();
+            Query query = new Query(Criteria.where("username").is(username).and("projects.idValue").is(id));
+            Update update=new Update();
+            update.set("projects.$", arr.get(0));
+            db.findAndModify(query, update, User.class);
+            return "ok";
+        }
+        
+    }
+
+    @Override
+    public String updateBasicDetail(String username, BasicDetails basicDetails) {
+        
         Query query = new Query(Criteria.where("username").is(username));
         Update update = new Update();
-        update.push("projects").each(arr);
+        update.set("basicDetails",basicDetails);
         db.updateFirst(query, update, User.class);
-        
+        return "ok";
     }
     
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 //import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,8 +21,10 @@ import portfolio_backend.web_server.service_classes.HandleLogin;
 //import portfolio_backend.web_server.service_classes.HandleUpdate;
 import portfolio_backend.web_server.service_classes.HandleSignup;
 import portfolio_backend.web_server.service_classes.HandleUpdate;
+import portfolio_backend.web_server.service_classes.HandleVerifyUserName;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class Handlers {
 
     @Autowired
@@ -32,6 +35,8 @@ public class Handlers {
     private HandleUpdate update;
     @Autowired
     private HandleFecth fetch;
+    @Autowired
+    private HandleVerifyUserName verify;
 
     @PostMapping(path="/login",produces = MediaType.APPLICATION_JSON_VALUE,
     consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -60,5 +65,12 @@ public class Handlers {
     List<User> fetchUser(@PathVariable String username)
     {
         return fetch.getData(username);
+    }
+
+    @PostMapping(path="/verify",produces = MediaType.APPLICATION_JSON_VALUE,
+    consumes = MediaType.APPLICATION_JSON_VALUE)
+    String verifyUserName(@RequestBody User user)
+    {
+        return verify.Verify(user.getUsername());
     }
 }

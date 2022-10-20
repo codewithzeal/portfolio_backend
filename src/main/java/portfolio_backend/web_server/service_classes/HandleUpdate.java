@@ -24,6 +24,8 @@ public class HandleUpdate {
         db.updateProject(user.getUsername(),user.getProjects());
         else if(type.equals("address")&&db.checkForUser(user.getUsername()))
         db.updateAddress(user.getUsername(),user.getAddress());
+        else if(type.equals("basic")&&db.checkForUser(user.getUsername()))
+        db.updateBasicDetail(user.getUsername(), user.getBasicDetails());
 
     }
 }

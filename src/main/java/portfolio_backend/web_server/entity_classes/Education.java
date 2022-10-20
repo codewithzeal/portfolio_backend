@@ -9,7 +9,8 @@ import lombok.ToString;
 @ToString
 public class Education {
 
-  private String institute;
+    private String idValue;
+    private String institute;
     private String stream;
     private String startDate;
     private String endDate;

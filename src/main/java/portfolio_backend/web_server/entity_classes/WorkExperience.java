@@ -10,6 +10,7 @@ import lombok.ToString;
 
 public class WorkExperience {
     
+    private String idValue;
     private  String organization;
     private String position;
     private String startDate;

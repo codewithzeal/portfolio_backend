@@ -23,5 +23,5 @@ public class User {
     private ArrayList<Project> projects=new ArrayList<>();
     private String additionalInfo="No data";
     private Address address=new Address();
-    
+    private BasicDetails basicDetails=new BasicDetails();
 }
