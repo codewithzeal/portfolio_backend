@@ -1,6 +1,8 @@
 package portfolio_backend.web_server.controller_classes;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -40,10 +42,21 @@ public class Handlers {
 
     @PostMapping(path="/login",produces = MediaType.APPLICATION_JSON_VALUE,
     consumes = MediaType.APPLICATION_JSON_VALUE)
-    String checkLogin(@RequestBody User user)
+    String checkLogin(@RequestBody User user,HttpSession obj)
     {
-        return login.getLogin(user);
+        //System.out.println(obj.getId());
+        String val=login.getLogin(user);
+        if(val=="ok")
+        return obj.getId();
+        return "nok";
         //return login.getLogin(user);
+    }
+
+    @PostMapping(path="/checkSession")
+    String checkSession(HttpSession obj)
+    {
+        System.out.println(obj.getMaxInactiveInterval());
+        return "ok";
     }
 
     @PostMapping(path="/signup",produces = MediaType.APPLICATION_JSON_VALUE,
