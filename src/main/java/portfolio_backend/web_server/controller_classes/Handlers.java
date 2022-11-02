@@ -30,7 +30,7 @@ import portfolio_backend.web_server.service_classes.HandleUpdate;
 import portfolio_backend.web_server.service_classes.HandleVerifyUserName;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://myself-portfolio-app.herokuapp.com")
 public class Handlers {
 
     @Autowired
