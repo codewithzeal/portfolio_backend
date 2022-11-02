@@ -14,6 +14,7 @@ import portfolio_backend.web_server.entity_classes.Address;
 import portfolio_backend.web_server.entity_classes.BasicDetails;
 import portfolio_backend.web_server.entity_classes.Education;
 import portfolio_backend.web_server.entity_classes.Project;
+import portfolio_backend.web_server.entity_classes.Skills;
 import portfolio_backend.web_server.entity_classes.User;
 import portfolio_backend.web_server.entity_classes.WorkExperience;
 @Component
@@ -70,13 +71,22 @@ public class MongoImpl implements MongoTemplateInterface{
     }
 
     @Override
-    public String updateSkills(String username, ArrayList<String> arr) {
-        Query query = new Query(Criteria.where("username").is(username));
-        Update update = new Update();
-        update.push("skills").each(arr);
-        db.updateFirst(query, update, User.class);
-        return "ok";
-        
+    public String updateSkills(String username, ArrayList<Skills> arr) {
+        if(arr.get(0).getIdValue()==null)
+        {
+            System.out.println("here here here here 0");
+            for(int i=0;i<arr.size();i++)
+            {
+                String val=username+System.currentTimeMillis()+i;
+                arr.get(i).setIdValue(val);
+            }
+            Query query = new Query(Criteria.where("username").is(username));
+            Update update = new Update();
+            update.push("skills").each(arr);
+            db.updateFirst(query, update, User.class);
+            return arr.toString();
+        }
+        return "nok";
     }
 
     @Override
@@ -172,6 +182,31 @@ public class MongoImpl implements MongoTemplateInterface{
         update.set("basicDetails",basicDetails);
         db.updateFirst(query, update, User.class);
         return "ok";
+    }
+
+    @Override
+    public String deleteSkills(String username, ArrayList<Skills>arr) {
+        Query query = new Query(Criteria.where("username").is(username).and("skills.idValue").is(arr.get(0).getIdValue()));
+        Update update = new Update();
+        update.pull("skills", arr.get(0));
+        db.findAndModify(query, update, User.class);
+        return "ok";
+    }
+
+    @Override
+    public List<User> fetchDataByID(String id) {
+        Query query = new Query(Criteria.where("uid").is(id));   
+        query.fields().exclude("password");
+        return db.find(query, User.class);
+    }
+
+    @Override
+    public String fetchUid(String username) {
+        Query query = new Query(Criteria.where("username").is(username));
+        User user=db.findOne(query,User.class);
+        if(user!=null)
+        return user.getUid();
+        return null;
     }
     
 }

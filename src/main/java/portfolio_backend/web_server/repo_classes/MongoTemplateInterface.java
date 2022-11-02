@@ -7,13 +7,14 @@ import portfolio_backend.web_server.entity_classes.Address;
 import portfolio_backend.web_server.entity_classes.BasicDetails;
 import portfolio_backend.web_server.entity_classes.Education;
 import portfolio_backend.web_server.entity_classes.Project;
+import portfolio_backend.web_server.entity_classes.Skills;
 import portfolio_backend.web_server.entity_classes.User;
 import portfolio_backend.web_server.entity_classes.WorkExperience;
 
 public interface MongoTemplateInterface {
     public String updateWorkExperience(String username,ArrayList<WorkExperience>arr);
     public String updateEducation(String username,ArrayList<Education>arr);
-    public String updateSkills(String username,ArrayList<String>arr);
+    public String updateSkills(String username,ArrayList<Skills> arr);
     public String updateAdditionalInfo(String username,String additionalInfo);
     public String updateAddress(String username,Address address);
     public String updateProject(String username,ArrayList<Project>arr);
@@ -24,4 +25,8 @@ public interface MongoTemplateInterface {
     public boolean checkCredential(String username,String Password);
     
     public List<User> fetchData(String username);
+    public List<User> fetchDataByID(String id);
+    public String fetchUid(String username);
+
+    public String deleteSkills(String username,ArrayList<Skills> arr);
 }

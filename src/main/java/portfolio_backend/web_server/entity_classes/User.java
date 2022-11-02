@@ -16,10 +16,11 @@ public class User {
     @Id
     private String username;
     private String password;
+    private String uid;
     private Boolean isDataPresent=Boolean.FALSE;
     private ArrayList<Education> education=new ArrayList<>();
     private ArrayList<WorkExperience> workExperiences=new ArrayList<>();
-    private ArrayList<String> skills=new ArrayList<>();
+    private ArrayList<Skills> skills=new ArrayList<>();
     private ArrayList<Project> projects=new ArrayList<>();
     private String additionalInfo="No data";
     private Address address=new Address();

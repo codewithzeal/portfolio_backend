@@ -18,4 +18,14 @@ public class HandleFecth {
     {
         return db.fetchData(username);
     }
+
+    public List<User>getDataByID(String id)
+    {
+        return db.fetchDataByID(id);
+    }
+
+    public String getUid(String username)
+    {
+        return db.fetchUid(username);
+    }
 }
